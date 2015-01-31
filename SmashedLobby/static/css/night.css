@@ -1,0 +1,23 @@
+body {
+	background-color: #101010
+}
+
+#main_div {
+	background-color: #202020;
+	color: #808080;
+}
+
+.alert_text {
+	color: #A02020;
+}
+
+h1.edo_header {
+	text-align:center;
+	text-shadow: 
+		-2px -2px 0 #000000,
+		2px -2px 0 #000000,
+		-2px 2px 0 #000000,
+		2px 2px 0 #000000;
+	font-family:Edo, Helvetica, Arial;
+	font-size: 64px;
+}

@@ -1,0 +1,7 @@
+#start the db and messaging
+mongod --dbpath <your mongodb path>
+rabbitmq-server
+
+# start matchmaker
+# start webserver
+# start lobby
