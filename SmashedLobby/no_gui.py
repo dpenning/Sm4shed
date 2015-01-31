@@ -10,6 +10,8 @@ import time
 import hashlib
 import subprocess
 
+from config import DOLPHIN_PATH
+
 DEBUG = True
 
 if DEBUG:
@@ -17,7 +19,6 @@ if DEBUG:
 else:
 	base_url = 'www.sm4shed.com/'
 
-dolphin_path   = "/Users/dpenning/Github/dolphin/gui_build/Binaries/Dolphin.app/Contents/MacOS/Dolphin"
 game_tmp_file_path = "tmp";
 
 global_username = ""
@@ -90,14 +91,14 @@ def status():
 def host_game(game_id):
 	reset_tmp_file_path()
 	# spawn the hosting dolphin instance
-	subprocess.Popen([dolphin_path, '--gamestate=' + game_tmp_file_path, '-H'])
+	subprocess.Popen([DOLPHIN_PATH, '--gamestate=' + game_tmp_file_path, '-H'])
 
 	# send back message to say ready to connect
 	send_request("json/match/host",{"username": global_username, "session_id": global_session_id, "game_id":game_id})
 
 def connect_game(ip_address):
 	reset_tmp_file_path()
-	subprocess.Popen([dolphin_path, '-C', ip_address, '--gamestate=' + game_tmp_file_path])
+	subprocess.Popen([DOLPHIN_PATH, '-C', ip_address, '--gamestate=' + game_tmp_file_path])
 
 def search_matchmaking():
 	global global_username
