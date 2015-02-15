@@ -7,8 +7,8 @@ import website_connection as WC
 
 class Game:
 	
-	recieved_game_id = False
-	recieved_game = False
+	received_game_id = False
+	received_game = False
 	reported_hosting = False
 	in_game = False
 	game_finished = False
@@ -24,7 +24,7 @@ class Game:
 		self.reset()
 
 	def reset(self):
-		self.recieved_game_id = False
+		self.received_game_id = False
 		self.is_hosting = False
 		self.reported_hosting = False
 		self.in_game = False
@@ -34,24 +34,24 @@ class Game:
 
 	def perform_state(self, username, session_id):
 		# still waiting for a game
-		if not self.recieved_game_id:
+		if not self.received_game_id:
 
 			# send a request to check if matchmaking is finished
 			resp_dict = WC.check_matchmaking(username, session_id)
 			if resp_dict.get("success", None) and resp_dict.get("game_ready", None):
-				self.recieved_game_id = True
+				self.received_game_id = True
 				self.game_id = resp_dict.get("game_id", None)
 			return resp_dict
 		
 		# have game id but havent parsed game
-		elif not self.recieved_game:
+		elif not self.received_game:
 			if DEBUG and GAME_CLASS_DEBUG:
 				print ("[Game Class] still waiting for matchmaking")
 
 			# get the match details
 			resp_dict = WC.get_match(username, session_id, self.game_id)
 			if resp_dict.get("success", None):
-				self.recieved_game = True
+				self.received_game = True
 				host_str = resp_dict.get("host", None)
 				self.is_hosting = resp_dict.get((host_str + "_username"), None) == username
 			return resp_dict
@@ -167,8 +167,8 @@ if __name__ == "__main__":
 	
 	g.game_id = "5ygOcV5oOATO7zpZP1ht"
 
-	g.recieved_game_id = True
-	g.recieved_game = True
+	g.received_game_id = True
+	g.received_game = True
 	g.reported_hosting = True
 	g.in_game = True
 	g.game_finished = False
