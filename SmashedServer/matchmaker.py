@@ -44,7 +44,13 @@ class Matchmaker:
 			username = message["username"]
 			self.remove_user(username)
 			return True
-		return False
+
+		elif command == "count":
+			return self.check_number_in_queue()
+
+	#[TODO] actually pass this trough to mongo
+	def check_number_in_queue(self):
+		len(self.current_users_dict)
 
 	def perform_next_queue(self):
 		if not self.process_queue.empty():

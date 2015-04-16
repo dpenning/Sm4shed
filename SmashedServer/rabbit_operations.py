@@ -24,28 +24,23 @@ class RabbitOperator:
 		else:
 			return None
 
+	def publish(self, body):
+		try:
+			self.channel.basic_publish(
+				exchange='',
+				routing_key=self.queue_name,
+				body=json.dumps(body))
+			return True
+		except Exception as e:
+			return False
+
 	def insert_player_into_matchmaking_queue(self, username, rating):
-		try:
-			self.channel.basic_publish(
-				exchange='',
-				routing_key=self.queue_name,
-				body=json.dumps({
-					"command": "insert",
-					"username": username,
-					"rating": rating}))
-			return True
-		except Exception as e:
-			return False
-
+		return self.publish({
+			"command": "insert",
+			"username": username,
+			"rating": rating})
+		
 	def remove_player_from_matchmaking_queue(self, username):
-		try:
-			self.channel.basic_publish(
-				exchange='',
-				routing_key=self.queue_name,
-				body=json.dumps({
-					"command": "remove",
-					"username": username}))
-			return True
-		except Exception as e:
-			return False
-
+		return self.publish({
+			"command": "remove",
+			"username": username})
